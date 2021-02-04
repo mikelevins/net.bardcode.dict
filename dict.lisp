@@ -1,7 +1,7 @@
 ;;;; ***********************************************************************
 ;;;;
 ;;;; Name:          dict.lisp
-;;;; Project:       Delectusweb
+;;;; Project:       net.bardcode.dict
 ;;;; Purpose:       finite maps using alists for entries
 ;;;; Author:        mikel evins
 ;;;; Copyright:     2021 by mikel evins
