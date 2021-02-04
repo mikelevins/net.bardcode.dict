@@ -1,4 +1,4 @@
-# cl-dict
+# net.bardcode.dict
 ### _mikel evins <mikel@evins.net>_
 
 A simple dictionary class built on alists.
