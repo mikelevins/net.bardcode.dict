@@ -39,6 +39,9 @@
 (defmethod all-values ((dict dict) &key &allow-other-keys)
   (mapcar 'cdr (entries dict)))
 
+(defmethod all-entries ((dict dict) &key &allow-other-keys)
+  (entries dict))
+
 (defmethod contains-key? ((dict dict) key)
   (if (assoc key (entries dict) :test (key-test dict))
       t
