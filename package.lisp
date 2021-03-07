@@ -12,6 +12,6 @@
   (:use #:cl)
   (:export #:dict #:dict? #:immutable-dict? #:mutable-dict?
            #:all-entries #:all-keys #:all-values #:contains-key? #:contains-value?
-           #:copy-dict #:empty? #:entries #:get-key #:merge-dicts
+           #:copy-dict #:empty? #:entries #:get-key #:merge-dicts #:merge-keys
            #:put-key #:remove-key #:select-keys #:select-complement-keys
            #:mutable-dict #:merge-into! #:remove-key! #:set-key!))
