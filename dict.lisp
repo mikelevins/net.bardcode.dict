@@ -90,6 +90,26 @@
                             new-entries)))))
     (make-instance 'dict :key-test key-test :entries new-entries)))
 
+;;; creates a new dict from left with the keys from right added.
+;;; the new dict uses the key-test from left
+;;; if we find a duplicate key in right, we use its value, replacing
+;;; the value in left.
+(defmethod merge-keys ((left dict) (right dict))
+  (let* ((key-test (key-test left))
+         (left-entries (entries left))
+         (right-entries (entries right))
+         (new-entries (copy-tree left-entries)))
+    (loop for e in right-entries
+       do (let ((already-entry (assoc (car e) new-entries :test key-test)))
+            (if already-entry
+                (setf (cdr already-entry)
+                      (cdr e))
+                (setf new-entries
+                      (cons (cons (car e)
+                                  (cdr e))
+                            new-entries)))))
+    (make-instance 'dict :key-test key-test :entries new-entries)))
+
 (defmethod put-key ((dict dict) key value &key (test 'equal) (default nil))
   (let* ((already-entry (assoc key (entries dict) :test (key-test dict)))
          (new-entry (cons key value))
