@@ -74,28 +74,14 @@
         (cdr entry)
         default)))
 
-(defmethod merge-dicts ((left dict) (right dict))
-  (let* ((key-test (key-test left))
-         (left-entries (entries left))
-         (right-entries (entries right))
-         (new-entries (copy-tree left-entries)))
-    (loop for e in right-entries
-       do (let ((already-entry (assoc (car e) new-entries :test key-test)))
-            (if already-entry
-                (setf (cdr already-entry)
-                      (cdr e))
-                (setf new-entries
-                      (cons (cons (car e)
-                                  (cdr e))
-                            new-entries)))))
-    (make-instance 'dict :key-test key-test :entries new-entries)))
-
 ;;; creates a new dict from left with the keys from right added.
 ;;; the new dict uses the key-test from left
 ;;; if we find a duplicate key in right, we use its value, replacing
 ;;; the value in left.
-(defmethod merge-keys ((left dict) (right dict))
-  (let* ((key-test (key-test left))
+
+(defmethod binary-merge-keys ((left dict) (right dict) &key (result-class nil))
+  (let* ((result-class (or result-class (class-of left)))
+         (key-test (key-test left))
          (left-entries (entries left))
          (right-entries (entries right))
          (new-entries (copy-tree left-entries)))
@@ -108,7 +94,19 @@
                       (cons (cons (car e)
                                   (cdr e))
                             new-entries)))))
-    (make-instance 'dict :key-test key-test :entries new-entries)))
+    (make-instance result-class :key-test key-test :entries new-entries)))
+
+;;; (setf $dict1 (dict 'equal "name" "Fred" "age" 35))
+;;; (setf $dict3 (binary-merge-keys $dict1 (dict 'equal "name" "Barney")))
+;;; (class-of $dict3)
+
+(defmethod merge-keys ((left dict) &rest dicts)
+  (reduce 'binary-merge-keys dicts :initial-value left))
+
+;;; (setf $dict1 (dict 'equal "name" "Barney" "age" 35))
+;;; (setf $dict2 (dict 'equal "name" "Fred" "color" :orange))
+;;; (setf $dict3 (dict 'equal "shape" :square))
+;;; (setf $dict4 (merge-keys $dict1 $dict2 $dict3))
 
 (defmethod put-key ((dict dict) key value &key (test 'equal) (default nil))
   (let* ((already-entry (assoc key (entries dict) :test (key-test dict)))
@@ -124,7 +122,7 @@
   (let* ((found-entry (assoc key (entries dict) :test (key-test dict)))
          (new-entries (if found-entry
                           (remove key (entries dict) :test (key-test dict) :key 'car)
-                          (entries dict))))
+                          (copy-tree (entries dict)))))
     (make-instance 'dict
           :key-test (key-test dict)
           :entries new-entries)))
@@ -134,14 +132,14 @@
     (make-instance 'dict
           :key-test key-test
           :entries (remove-if-not (lambda (entry)(member (car entry) keys :test (or test (key-test dict))))
-                                  (entries dict)))))
+                                  (copy-tree (entries dict))))))
 
 (defmethod select-complement-keys ((dict dict) keys &key test &allow-other-keys)
   (let ((key-test (key-test dict)))
     (make-instance 'dict
                    :key-test key-test
                    :entries (remove-if (lambda (entry)(member (car entry) keys :test (or test (key-test dict))))
-                                       (entries dict)))))
+                                       (copy-tree (entries dict))))))
 
 ;;; (setf $d (dict 'equal :a 1 :b 2 :c 3 :d 4))
 ;;; (select-keys $d '(:a :c))
@@ -198,12 +196,12 @@
 ;;; (setf $dict1 (dict 'equal "name" "Fred" "age" 35))
 ;;; (all-keys $dict1)
 ;;; (all-values $dict1)
-;;; (contains-key? $dict1 "names")
+;;; (contains-key? $dict1 "name")
 ;;; (contains-value? $dict1 "fred")
 ;;; (setf $dict2 (copy-dict $dict1))
 ;;; (get-key $dict2 "name")
-;;; (get-key $dict2 "shape" :none)
-;;; (setf $dict3 (merge-dicts $dict1 (dict 'equal "name" "Barney")))
+;;; (get-key $dict2 "shape" :default :none)
+;;; (setf $dict3 (merge-keys $dict1 (dict 'equal "name" "Barney")))
 ;;; (setf $dict4 (put-key $dict1 "color" "orange"))
 ;;; (remove-key $dict4 "age")
 ;;; (select-keys $dict4 (list "age" "color" "shape"))
