@@ -65,7 +65,7 @@
        t))
 
 (defmethod copy-dict ((dict dict))
-  (make-instance 'dict
+  (make-instance (class-of dict)
                  :key-test (key-test dict)
                  :entries (copy-tree (entries dict))))
 
@@ -118,7 +118,7 @@
          (new-entries (if already-entry
                           (remove key (entries dict) :test (key-test dict) :key 'car)
                           (entries dict))))
-    (make-instance 'dict
+    (make-instance (class-of dict)
           :key-test (key-test dict)
           :entries (cons new-entry new-entries))))
 
@@ -127,20 +127,20 @@
          (new-entries (if found-entry
                           (remove key (entries dict) :test (key-test dict) :key 'car)
                           (copy-tree (entries dict)))))
-    (make-instance 'dict
+    (make-instance (class-of dict)
           :key-test (key-test dict)
           :entries new-entries)))
 
 (defmethod select-keys ((dict dict) keys &key test &allow-other-keys)
   (let ((key-test (key-test dict)))
-    (make-instance 'dict
+    (make-instance (class-of dict)
           :key-test key-test
           :entries (remove-if-not (lambda (entry)(member (car entry) keys :test (or test (key-test dict))))
                                   (copy-tree (entries dict))))))
 
 (defmethod select-complement-keys ((dict dict) keys &key test &allow-other-keys)
   (let ((key-test (key-test dict)))
-    (make-instance 'dict
+    (make-instance (class-of dict)
                    :key-test key-test
                    :entries (remove-if (lambda (entry)(member (car entry) keys :test (or test (key-test dict))))
                                        (copy-tree (entries dict))))))
