@@ -7,7 +7,8 @@
   :version "0.0.1"
   :serial t
   :components ((:file "package")
-               (:file "dict")))
+               (:file "dict")
+               (:file "mutable-dict")))
 
 ;;; (asdf:load-system :net.bardcode.dict)
 ;;; (ql:quickload :net.bardcode.dict)
