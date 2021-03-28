@@ -145,6 +145,19 @@
                    :entries (remove-if (lambda (entry)(member (car entry) keys :test (or test (key-test dict))))
                                        (copy-tree (entries dict))))))
 
+
+;;; select-keys-if dict test
+;;; ---------------------------------------------------------------------
+;;; select keys of the dict for which the function test reutrns true
+;;; test is a function of the form (lambda (key value)...) => Boolean
+
+(defmethod select-keys-if ((dict dict)(test function))
+  (let ((passing-keys (remove-if-not (lambda (k)(funcall test k (get-key dict k :default nil)))
+                                 (all-keys dict))))
+    (select-keys dict passing-keys)))
+
 ;;; (setf $d (dict 'equal :a 1 :b 2 :c 3 :d 4))
+;;; (all-keys $d)
 ;;; (select-keys $d '(:a :c))
 ;;; (select-complement-keys $d '(:a :c))
+;;; (select-keys-if $d (lambda (k v)(zerop v)))
