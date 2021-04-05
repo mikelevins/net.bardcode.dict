@@ -69,7 +69,7 @@
                  :key-test (key-test dict)
                  :entries (copy-tree (entries dict))))
 
-(defmethod empty? ((dict dict) &key &allow-other-keys)
+(defmethod empty-dict? ((dict dict) &key &allow-other-keys)
   (null (entries dict)))
 
 (defmethod get-key ((dict dict) key &key (default nil))
