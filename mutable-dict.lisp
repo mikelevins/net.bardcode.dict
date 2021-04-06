@@ -17,6 +17,21 @@
 
 (defclass mutable-dict (dict)())
 
+
+(defmethod print-object ((dict mutable-dict) stream)
+  (let* ((entries (entries dict))
+         (first-entry (first entries))
+         (rest-entries (rest entries)))
+    (print-unreadable-object (dict stream :type t)
+      (format stream "{")
+    (when first-entry
+      (format stream "~S ~S" (car first-entry)(cdr first-entry)))
+    (loop for entry in rest-entries
+       do (let ((*print-pretty* nil))
+            (format stream " ~S ~S" (car entry)(cdr entry))))
+    (format stream "}"))))
+
+
 ;;; mutable dicts
 
 (defun mutable-dict (key-test &rest contents)
