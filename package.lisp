@@ -10,7 +10,7 @@
 
 (defpackage #:net.bardcode.dict
   (:use #:cl)
-  (:export #:dict #:dict? #:immutable-dict? #:mutable-dict?
+  (:export #:dict #:dict? #:immutable-dict? #:mutable-dict #:mutable-dict?
            #:all-entries #:all-keys #:all-values #:contains-key? #:contains-value?
            #:copy-dict #:empty? #:entries #:get-key #:key-test #:merge-keys
            #:put-key #:remove-key #:select-keys #:select-complement-keys #:select-keys-if
