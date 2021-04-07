@@ -145,6 +145,14 @@
                    :entries (remove-if (lambda (entry)(member (car entry) keys :test (or test (key-test dict))))
                                        (copy-tree (entries dict))))))
 
+;;; conversions
+;;;------------------------------------------------------------------------------------------
+
+(defmethod to-alist ((dict dict))
+  (copy-tree (dict:entries dict)))
+
+(defmethod to-plist ((dict dict))
+  (alist-to-plist (to-alist dict)))
 
 ;;; select-keys-if dict test
 ;;; ---------------------------------------------------------------------
