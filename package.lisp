@@ -12,9 +12,16 @@
   (:use #:cl #:net.bardcode.alist)
   (:local-nicknames
    (:dict :net.bardcode.dict))
-  (:export #:dict #:dict? #:immutable-dict? #:mutable-dict #:mutable-dict?
-           #:all-entries #:all-keys #:all-values #:contains-key? #:contains-value?
-           #:copy-dict #:empty? #:entries #:get-key #:key-test #:merge-keys
-           #:put-key #:remove-key #:select-keys #:select-complement-keys #:select-keys-if
-           #:mutable-dict #:merge-into! #:remove-key! #:set-key!
-           #:to-alist #:to-plist))
+  (:export
+   #:alist #:alist? #:alist-to-plist #:all-entries #:all-keys #:all-values
+   #:contains-key? #:contains-value? #:copy-dict
+   #:dict #:dict? #:dict-to-alist #:dict-to-plist
+   #:empty? #:entries
+   #:get-key
+   #:immutable-dict?
+   #:key-test
+   #:merge-keys #:merge-into! #:mutable-dict #:mutable-dict?
+   #:plist #:plist? #:plist-to-alist #:put-key
+   #:remove-key #:remove-key!
+   #:select-complement-keys #:select-keys #:select-keys-if #:set-key!
+   ))

@@ -148,11 +148,29 @@
 ;;; conversions
 ;;;------------------------------------------------------------------------------------------
 
-(defmethod to-alist ((dict dict))
+(defmethod dict-to-alist ((dict dict))
   (copy-tree (dict:entries dict)))
 
-(defmethod to-plist ((dict dict))
+(defmethod alist-to-dict ((alist null) &key (class 'dict)(key-test 'equal))
+  (declare (ignore alist))
+  (make-instance class :key-test key-test))
+
+(defmethod alist-to-dict ((alist list) &key (class 'dict)(key-test 'equal))
+  (make-instance class
+                 :key-test key-test
+                 :entries (copy-tree alist)))
+
+(defmethod dict-to-plist ((dict dict))
   (alist-to-plist (to-alist dict)))
+
+(defmethod plist-to-dict ((plist null) &key (class 'dict)(key-test 'equal))
+  (declare (ignore alist))
+  (make-instance class :key-test key-test))
+
+(defmethod plist-to-dict ((plist list) &key (class 'dict)(key-test 'equal))
+  (make-instance class
+                 :key-test key-test
+                 :entries (plist-to-alist plist)))
 
 ;;; select-keys-if dict test
 ;;; ---------------------------------------------------------------------
