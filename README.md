@@ -3,6 +3,8 @@
 
 A simple dictionary class built on alists.
 
+OBSOLETE: these features have been merged into net.bardcode.dict.
+
 ## License
 
 Apache 2.0
