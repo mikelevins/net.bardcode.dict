@@ -10,8 +10,7 @@
 
 (defpackage #:net.bardcode.dict
   (:use #:cl #:net.bardcode.alist)
-  (:local-nicknames
-   (:dict :net.bardcode.dict))
+  (:nicknames :dict)
   (:export
    #:alist #:alist? #:alist-to-plist #:all-entries #:all-keys #:all-values
    #:contains-key? #:contains-value? #:copy-dict

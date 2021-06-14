@@ -161,7 +161,7 @@
                  :entries (copy-tree alist)))
 
 (defmethod dict-to-plist ((dict dict))
-  (alist-to-plist (to-alist dict)))
+  (alist-to-plist (dict-to-alist dict)))
 
 (defmethod plist-to-dict ((plist null) &key (class 'dict)(key-test 'equal))
   (declare (ignore alist))
