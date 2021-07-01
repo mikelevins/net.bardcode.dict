@@ -77,7 +77,7 @@
 ;;; (all-keys $dict1)
 ;;; (all-values $dict1)
 ;;; (contains-key? $dict1 "name")
-;;; (contains-value? $dict1 "fred")
+;;; (contains-value? $dict1 "Fred")
 ;;; (setf $dict2 (copy-dict $dict1))
 ;;; (get-key $dict2 "name")
 ;;; (get-key $dict2 "shape" :default :none)

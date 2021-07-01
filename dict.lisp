@@ -186,4 +186,4 @@
 ;;; (all-keys $d)
 ;;; (select-keys $d '(:a :c))
 ;;; (select-complement-keys $d '(:a :c))
-;;; (select-keys-if $d (lambda (k v)(zerop v)))
+;;; (select-keys-if $d (lambda (k v)(plusp v)))
