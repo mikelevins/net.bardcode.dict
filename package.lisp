@@ -13,6 +13,7 @@
   (:nicknames :dict)
   (:export
    #:alist #:alist? #:alist-to-plist #:all-entries #:all-keys #:all-values
+   #:binary-merge-keys
    #:contains-key? #:contains-value? #:copy-dict
    #:dict #:dict? #:dict-to-alist #:dict-to-plist
    #:empty? #:entries
