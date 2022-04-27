@@ -8,6 +8,7 @@
   :serial t
   :depends-on (:net.bardcode.alist)
   :components ((:file "package")
+               (:file "utils")
                (:file "dict")
                (:file "mutable-dict")))
 
