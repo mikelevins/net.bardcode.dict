@@ -28,11 +28,14 @@
     (format stream "{")
     (when first-entry
       (format stream "~S ~S" (car first-entry)(cdr first-entry)))
-    (if (< (length rest-entries) (1- *maximum-printed-dict-entries*))
+    (if (<= (length rest-entries) (1- *maximum-printed-dict-entries*))
+        ;; short list; print them all
         (loop for entry in rest-entries
            do (let ((*print-pretty* nil))
                 (format stream " ~S ~S" (car entry)(cdr entry))))
-        (let ((entries-to-print (take (1- *maximum-printed-dict-entries*))))
+        ;; long list; print the first few
+        (let ((entries-to-print (take (1- *maximum-printed-dict-entries*)
+                                      rest-entries)))
           (loop for entry in entries-to-print
              do (let ((*print-pretty* nil))
                   (format stream " ~S ~S" (car entry)(cdr entry))))
