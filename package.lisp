@@ -12,6 +12,7 @@
   (:use #:cl #:net.bardcode.alist)
   (:nicknames :dict)
   (:export
+   #:*maximum-printed-dict-entries*
    #:alist #:alist? #:alist-to-plist #:all-entries #:all-keys #:all-values
    #:binary-merge-keys
    #:contains-key? #:contains-value? #:copy-dict
