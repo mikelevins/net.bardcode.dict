@@ -13,7 +13,7 @@
   (:nicknames :dict)
   (:export
    #:*maximum-printed-dict-entries*
-   #:alist #:alist? #:alist-to-plist #:all-entries #:all-keys #:all-values
+   #:alist #:alist? #:alist-to-dict #:alist-to-plist #:all-entries #:all-keys #:all-values
    #:binary-merge-keys
    #:contains-key? #:contains-value? #:copy-dict
    #:dict #:dict? #:dict-to-alist #:dict-to-plist
@@ -22,7 +22,7 @@
    #:immutable-dict?
    #:key-test
    #:merge-keys #:merge-into! #:mutable-dict #:mutable-dict?
-   #:plist #:plist? #:plist-to-alist #:put-key
+   #:plist #:plist? #:plist-to-alist #:plist-to-dict #:put-key
    #:remove-key #:remove-key!
    #:select-complement-keys #:select-keys #:select-keys-if #:set-key!
    ))
