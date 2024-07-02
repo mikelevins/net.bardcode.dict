@@ -4,7 +4,7 @@
   :description "A simple finite map class using alists for entries"
   :author "mikel evins <mikel@evins.net>"
   :license  "Apache 2.0"
-  :version "0.0.1"
+  :version (:read-file-form "version.lisp")
   :serial t
   :depends-on (:net.bardcode.alist)
   :components ((:file "package")
