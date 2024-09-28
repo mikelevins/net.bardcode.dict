@@ -22,25 +22,26 @@
 (defparameter *maximum-printed-dict-entries* 5)
 
 (defmethod print-object ((dict dict) stream)
-  (let* ((entries (entries dict))
-         (first-entry (first entries))
-         (rest-entries (rest entries)))
-    (format stream "{")
-    (when first-entry
-      (format stream "~S ~S" (car first-entry)(cdr first-entry)))
-    (if (<= (length rest-entries) (1- *maximum-printed-dict-entries*))
-        ;; short list; print them all
-        (loop for entry in rest-entries
-           do (let ((*print-pretty* nil))
-                (format stream " ~S ~S" (car entry)(cdr entry))))
-        ;; long list; print the first few
-        (let ((entries-to-print (take (1- *maximum-printed-dict-entries*)
-                                      rest-entries)))
-          (loop for entry in entries-to-print
-             do (let ((*print-pretty* nil))
-                  (format stream " ~S ~S" (car entry)(cdr entry))))
-          (format stream "...")))
-    (format stream "}")))
+  (print-unreadable-object (dict stream :type nil :identity nil)
+    (let* ((entries (entries dict))
+           (first-entry (first entries))
+           (rest-entries (rest entries)))
+      (format stream "~A {" (class-name (class-of dict)))
+      (when first-entry
+        (format stream "~S ~S" (car first-entry)(cdr first-entry)))
+      (if (<= (length rest-entries) (1- *maximum-printed-dict-entries*))
+          ;; short list; print them all
+          (loop for entry in rest-entries
+                do (let ((*print-pretty* nil))
+                     (format stream " ~S ~S" (car entry)(cdr entry))))
+          ;; long list; print the first few
+          (let ((entries-to-print (take (1- *maximum-printed-dict-entries*)
+                                        rest-entries)))
+            (loop for entry in entries-to-print
+                  do (let ((*print-pretty* nil))
+                       (format stream " ~S ~S" (car entry)(cdr entry))))
+            (format stream "...")))
+      (format stream "}"))))
 
 (defun dict (key-test &rest contents)
   (let ((entries (loop for tail on contents by #'cddr
