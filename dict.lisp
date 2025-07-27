@@ -157,6 +157,14 @@
                    :entries (remove-if (lambda (entry)(member (car entry) keys :test (or test (key-test dict))))
                                        (copy-tree (entries dict))))))
 
+;;; test-fn is of the form (lambda (key val)...) returning true if the entry is to be included in the output
+(defmethod select-entries ((dict dict) test-fn)
+  (let ((key-test (key-test dict)))
+    (make-instance (class-of dict)
+                   :key-test key-test
+                   :entries (remove-if-not (lambda (entry)(funcall test-fn entry))
+                                           (copy-tree (entries dict))))))
+
 ;;; conversions
 ;;;------------------------------------------------------------------------------------------
 
