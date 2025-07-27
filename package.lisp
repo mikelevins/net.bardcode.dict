@@ -24,5 +24,5 @@
    #:merge-keys #:merge-into! #:mutable-dict #:mutable-dict?
    #:plist #:plist? #:plist-to-alist #:plist-to-dict #:put-key
    #:remove-key #:remove-key!
-   #:select-complement-keys #:select-keys #:select-keys-if #:set-key!
+   #:select-complement-keys #:select-entries #:select-keys #:select-keys-if #:set-key!
    ))
